@@ -1,0 +1,16 @@
+{
+  "name": "validation-z",
+  "version": "0.0.1",
+  "description": "Easy validation for input fields in server sider.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "validación",
+    "NodeJS",
+    "validation-z"
+  ],
+  "author": "zetogk <zetogk@gmail.com>",
+  "license": "ISC"
+}
