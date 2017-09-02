@@ -1,6 +1,18 @@
 const validatorRules = {
 
-	'min': (el, otherRules, ruleParams = []) => {
+
+	/*
+	* Name: min
+	* Function: Validates if a given number is greater than a established number
+	* Params:
+	*		elementName 	(String): Name of element or variable which will be analyzed
+	*		el: 			(String): Value of variable
+	*		otherRules: 	(Array): List of the others rules which can be used to modify the result of this function
+	*		ruleParams: 	(Array): List of parameters to evaluate the element. Should be only one parameter (min expected)
+	*		customMessages:	(object): List of custom messages which replaces the original messages. The names of valid messages: min
+	*		
+	*/
+	'min': (elementName, el, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		if (ruleParams.length == 1) {
 
@@ -9,8 +21,23 @@ const validatorRules = {
 				return { error: false };
 	
 			} else {
-	
-				return { error: true, message: 'Is smaller than min value' };
+				
+				let message = '';
+				if (customMessages.hasOwnProperty(elementName) && customMessages[elementName].hasOwnProperty('min')) {
+
+					message = customMessages[elementName]['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
+
+				} else if (customMessages.hasOwnProperty('min')) {
+
+					message = customMessages['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
+
+				} else {
+
+					message = messagesForValidation['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
+
+				}
+
+				return { error: true, message };
 				
 			}
 
@@ -107,14 +134,24 @@ const validatorRules = {
 
 };
 
-let validRules = ['between', 'colorhex', 'integer', 'max', 'min', 'required'];
+let messagesForValidation = {
+
+	'min': ':element should be greater than :param1',
+
+};
+
+//let validRules = ['between', 'colorhex', 'integer', 'max', 'min', 'required'];
+let validRules = ['min'];
+
+
 
 class ValidationZ {
 
-	constructor (vars = {}, rules = {}) {
+	constructor (vars = {}, rules = {}, messages = {}) {
 		this.errors = {};
 		this.vars = vars;
 		this.rules = rules;
+		this.messages = messages;
 	}
 
 	setVars(vars) {
@@ -127,6 +164,16 @@ class ValidationZ {
 
 		this.rules = rules;
 
+	}
+
+	setMessages(messages) {
+		
+		this.messages = messages;
+
+	}
+
+	buildValidationMessage() {
+		//TODO
 	}
 
 	validate() {
@@ -160,7 +207,7 @@ class ValidationZ {
 
 					if (validRules.includes(ruleName)) { // Should be a valid rule, if no is valid, will be omitted
 
-						let result = validatorRules[ruleName](this.vars[ruleKey], rules, ruleParams);
+						let result = validatorRules[ruleName](ruleKey, this.vars[ruleKey], rules, ruleParams, this.messages);
 						if (result.error) {
 	
 							ruleErrors.push(result.message);
@@ -187,9 +234,9 @@ class ValidationZ {
 
 	}
 
-	static makeValidation (vars, rules) {
+	static makeValidation (vars, rules, messages) {
 
-		let v = new ValidationZ(vars, rules);
+		let v = new ValidationZ(vars, rules, messages);
 		v.validate();
 
 	}

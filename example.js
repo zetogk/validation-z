@@ -9,7 +9,11 @@ posicion = 1;
 //Using the static method makeValidation
 let error = ValidationZ.makeValidation(
     {nombre, estrellas, color1, color2, posicion},
-    {nombre: ['required'], estrellas: ['integer', 'required', 'min:0', 'max:84'], posicion: ['integer', 'between:1,20'], color1: ['colorhex'], color2: ['colorhex']}
+    {nombre: ['required'], estrellas: ['integer', 'required', 'min:20', 'max:84'], posicion: ['integer', 'min:1'], color1: ['colorhex'], color2: ['colorhex']},
+    {
+        min: ':element debería ser mayor a :param1',
+        estrellas: { min: 'Deberían ser mas de :param1 estrellas' },
+    }
 );
 
 /*
