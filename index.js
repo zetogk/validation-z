@@ -12,102 +12,87 @@ const validatorRules = {
 	*		customMessages:	(object): List of custom messages which replaces the original messages. The names of valid messages: min
 	*		
 	*/
-	'min': (elementName, el, otherRules = [], ruleParams = [], customMessages = {}) => {
+	'min': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		if (ruleParams.length == 1) {
 
-			if (el >= ruleParams[0]) {
+			if (elementValue >= ruleParams[0]) {
 				
 				return { error: false };
 	
 			} else {
 				
-				let message = '';
-				if (customMessages.hasOwnProperty(elementName) && customMessages[elementName].hasOwnProperty('min')) {
-
-					message = customMessages[elementName]['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
-
-				} else if (customMessages.hasOwnProperty('min')) {
-
-					message = customMessages['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
-
-				} else {
-
-					message = messagesForValidation['min'].replace(':element', elementName).replace(':param1', ruleParams[0]).replace(':value', el);
-
-				}
-
-				return { error: true, message };
+				return { error: true, message: buildValidationMessage(customMessages, 'min', elementName, elementValue, ruleParams) };
 				
 			}
 
 		} else {
 
-			return { error: true, message: 'Invalid params for min validation' };
+			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
 
 		}
 		
 	},
-	'max': (el, otherRules,  ruleParams = []) => {
+	'max': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		if (ruleParams.length == 1) {
-		
-			if (el <= ruleParams[0]) {
+			
+			if (elementValue <= ruleParams[0]) {
 				
 				return { error: false };
-
+	
 			} else {
-
-				return { error: true, message: 'Is higer than max value' };
+				
+				return { error: true, message: buildValidationMessage(customMessages, 'max', elementName, elementValue, ruleParams) };
 				
 			}
 
 		} else {
 
-			return { error: true, message: 'Invalid params for max validation' };
+			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
 
 		}
 
 	},
-	'integer': (el, otherRules,  ruleParams = []) => {
+	'integer': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
-		if (el === parseInt(el, 10)) {
+		if (elementValue === parseInt(elementValue, 10)) {
 
 			return { error: false };
-
+			
 		} else {
 
-			return { error: true, message: 'Is not a integer' };
-			
+			return { error: true, message: buildValidationMessage(customMessages, 'integer', elementName, elementValue, ruleParams) };
+
 		}
 
 	},
-	'between': (el, otherRules,  ruleParams = []) => {
+	'between': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 		
 		if (ruleParams.length == 2) {
 			
-			if (el >= ruleParams[0] && el <= ruleParams[1]) {
+			if (elementValue >= ruleParams[0] && elementValue <= ruleParams[1]) {
 				
 				return { error: false };
 
 			} else {
 
-				return { error: true, message: 'Is out of data range' };
+				return { error: true, message: buildValidationMessage(customMessages, 'between', elementName, elementValue, ruleParams) };
 				
 			}
 
 		} else {
 
-			return { error: true, message: 'Invalid params for between validation' };
+			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
 
 		}
 
 	},
-	'required': (el, otherRules,  ruleParams = []) => {
+	'required': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
-		if (el === '' || el === null || el === undefined) {
+		if (elementValue === '' || elementValue === null || elementValue === undefined) {
 			
-			return { error: true, message: 'The variable is required. it should contain a value.' };
+			return { error: true, message: buildValidationMessage(customMessages, 'required', elementName, elementValue, ruleParams) };
 
 		} else {
 
@@ -116,17 +101,17 @@ const validatorRules = {
 		}
 
 	},
-	'colorhex': (el, otherRules, ruleParams = []) => {
+	'colorhex': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		const re = /^[#]{1}[A-Fa-f0-9]{6}$/;
 
-		if (re.test(el)) {
+		if (re.test(elementValue)) {
 			
 			return { error: false };
 
 		} else {
 
-			return { error: true, message: 'The variable is not a valid color in hex.' };
+			return { error: true, message: buildValidationMessage(customMessages, 'colorhex', elementName, elementValue, ruleParams) };
 
 		}
 
@@ -136,22 +121,54 @@ const validatorRules = {
 
 let messagesForValidation = {
 
-	'min': ':element should be greater than :param1',
+	'between': ':elName is out of data range',
+	'colorhex': ':elName is not a valid color in hex.',
+	'invalid-params': 'Invalid type or quantity of params for :elName',
+	'integer': ':elName is not integer',
+	'min': ':elName should be greater than :param1',
+	'max': ':elName should be minor than :param1',
+	'required': ':elName is required.'
 
 };
 
-//let validRules = ['between', 'colorhex', 'integer', 'max', 'min', 'required'];
-let validRules = ['min'];
+let validRules = ['between', 'colorhex', 'integer', 'min', 'max', 'required'];
 
+const buildValidationMessage = (customMessages, ruleName, elementName, elementValue, ruleParams) => {
+	
+	let messageBase = '';
+	if (customMessages.hasOwnProperty(elementName) && customMessages[elementName].hasOwnProperty(ruleName)) {
+		
+		messageBase = customMessages[elementName][ruleName];
+		
+	} else if (customMessages.hasOwnProperty(ruleName)) {
 
+		messageBase = customMessages[ruleName];
+
+	} else {
+
+		messageBase = messagesForValidation[ruleName];
+
+	}
+
+	m = messageBase.replace(':elName', elementName).replace(':elValue', elementValue);
+
+	for (pIndex of Object.keys(ruleParams)) {
+
+		m = m.replace(`:param${parseInt(pIndex) + 1}`, ruleParams[pIndex]);
+
+	}
+
+	return m;
+
+}
 
 class ValidationZ {
 
 	constructor (vars = {}, rules = {}, messages = {}) {
 		this.errors = {};
-		this.vars = vars;
-		this.rules = rules;
 		this.messages = messages;
+		this.rules = rules;
+		this.vars = vars;
 	}
 
 	setVars(vars) {
@@ -170,10 +187,6 @@ class ValidationZ {
 		
 		this.messages = messages;
 
-	}
-
-	buildValidationMessage() {
-		//TODO
 	}
 
 	validate() {
