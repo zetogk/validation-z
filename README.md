@@ -62,10 +62,9 @@ const messages = {
 let errors = ValidationZ.makeValidation(inputs, rules, messages);
 ```
 
-	* **:elName** *Will replaced by the name of input/variable*
-	* **:elValue** *Will replaced by the value of input/variable*
-	* **:paramx** (For example :param1, :param2, :param3, etc...) *Will replaced by the parameter value* => For example: between:1,5 param1 is 1 and param2 is 5
-
+* **:elName** *Will replaced by the name of input/variable*
+* **:elValue** *Will replaced by the value of input/variable*
+* **:paramx** (For example :param1, :param2, :param3, etc...) *Will replaced by the parameter value* => For example: `between:1,5` when param1 is 1 and param2 is 5
 
 ## Current rules
 
