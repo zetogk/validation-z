@@ -1,7 +1,6 @@
 # validation-z
 Validation for fields/values in NodeJS.
 
-
 ## How to use
 `const ValidationZ = require('validation-z');`
 
@@ -38,3 +37,13 @@ const rules = {
 
 let errors = ValidationZ.makeValidation(inputs, rules);
 ```
+
+## Current rules
+
+  * **min** min:1
+  * **max** max:5
+  * **integer** integer
+  * **between** between:1,5
+  * **required** required
+  * **colorhex** colorhex
+  
