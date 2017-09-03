@@ -1,17 +1,5 @@
 const validatorRules = {
 
-
-	/*
-	* Name: min
-	* Function: Validates if a given number is greater than a established number
-	* Params:
-	*		elementName 	(String): Name of element or variable which will be analyzed
-	*		el: 			(String): Value of variable
-	*		otherRules: 	(Array): List of the others rules which can be used to modify the result of this function
-	*		ruleParams: 	(Array): List of parameters to evaluate the element. Should be only one parameter (min expected)
-	*		customMessages:	(object): List of custom messages which replaces the original messages. The names of valid messages: min
-	*		
-	*/
 	'min': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		if (ruleParams.length == 1) {

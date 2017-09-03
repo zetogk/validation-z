@@ -1,7 +1,7 @@
 {
   "name": "validation-z",
-  "version": "0.0.1",
-  "description": "Easy validation for input fields in server sider.",
+  "version": "1.1.0",
+  "description": "Easy validation for input fields in server side.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,13 @@
     "NodeJS",
     "validation-z"
   ],
-  "author": "zetogk <zetogk@gmail.com>",
-  "license": "ISC"
+  "bugs": {
+    "url": "https://github.com/zetogk/validation-z/issues"
+  },
+  "author": "Santiago Yepes <zetogk@gmail.com>",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zetogk/validation-z/"
+  }
 }
