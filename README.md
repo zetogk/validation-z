@@ -54,7 +54,7 @@ const rules = {
 const messages = {
 	required: ':elName es requerido',
 	age: {
-		between: 'La edad debe ser mayor que :param1 y menor que :param2',
+		between: 'La edad debe ser menor que :param1 y mayor que :param2',
 		required: 'La edad es un campo obligatorio'
 	}
 }
@@ -75,3 +75,9 @@ let errors = ValidationZ.makeValidation(inputs, rules, messages);
   * **required** required
   * **colorhex** colorhex
   
+## Future rules
+
+  * **email**
+  * **accepted**
+  * **date**
+  * **exists_in_array**
