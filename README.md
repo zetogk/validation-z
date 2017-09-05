@@ -68,12 +68,38 @@ let errors = ValidationZ.makeValidation(inputs, rules, messages);
 
 ## Current rules
 
-  * **min** min:1
-  * **max** max:5
-  * **integer** integer
-  * **between** between:1,5
-  * **required** required
-  * **colorhex** colorhex
+  * **rule_name:param1,param2,paramx** (Version when was released) `Example`
+  
+  * **min:min_value** *(1.1.0)* `min:5`
+  
+  The value must be equal or greater than the given value.
+  
+  
+  * **max:max_value** *(1.1.0)* `max:5`
+  
+  The value must be equal or less than the given value.
+  
+  
+  * **integer** *(1.1.0)* integer `integer`
+  
+  The value must be an integer.
+  
+  
+  * **between:min,max** *(1.1.0)* `between:1,5`
+  
+  The value must be between the min and max value.
+  
+  
+  * **required** *(1.1.0)* `required`
+  
+  The value must be different to: `''`, `null` and `undefinded`
+  
+  
+  
+  * **colorhex** *(1.1.0)* `colorhex`
+  
+  The value must be a hexadecimal color like: `#00FF00` or `#3c3c3c`
+  
   
 ## Future rules
 
