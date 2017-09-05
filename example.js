@@ -5,11 +5,21 @@ estrellas = 16;
 color1 = '#FFFFFF';
 color2 = '#00FF00';
 posicion = 1;
+correo = 'zetogk@gmail.com',
+departamento = 'Antioquia'
 
 //Using the static method makeValidation
 let error = ValidationZ.makeValidation(
-    { nombre, estrellas, color1, color2, posicion },
-    { nombre: ['required'], estrellas: ['integer', 'required', 'min:0', 'max:84'], posicion: ['integer', 'between:1,20'], color1: ['colorhex'], color2: ['colorhex'] },
+    { nombre, estrellas, color1, color2, posicion, correo, departamento },
+    {
+        nombre: ['required'],
+        estrellas: ['integer', 'required', 'min:0', 'max:84'],
+        posicion: ['integer', 'between:1,20'],
+        color1: ['colorhex'],
+        color2: ['colorhex'],
+        correo: ['email'],
+        departamento: ['in:Antioquia,Cundinamarca'],
+    },
     {
         min: ':elName debería ser mayor a :param1',
         max: ':elName debería ser menor a :param1',
@@ -17,6 +27,8 @@ let error = ValidationZ.makeValidation(
         between: ':elName debe estar entre el rango :param1 y :param2',
         required: ':elName es requerido. Debe tener un valor.',
         colorhex: ':elName debe tener el formato #FFFFFF',
+        email: 'el correo :elValue no es válido',
+        in: 'El valor :elValue de la variable :elName no se encuentra en la lista',
         nombre: { required: 'El nombre es obligatorio' },
         color2: { colorhex: 'No tiene el formato esperado' },
         posicion: { integer: 'La posición debe ser un número entero. El valor actual es :elValue', between: 'La posición debe de estar entre el número :param1 y :param2' },

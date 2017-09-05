@@ -1,5 +1,5 @@
 # validation-z
-Validation for fields/values in NodeJS.
+Validation for fields/values in NodeJS. Inspired by the Laravel validation.
 
 ## How to use
 `const ValidationZ = require('validation-z');`
@@ -69,41 +69,48 @@ let errors = ValidationZ.makeValidation(inputs, rules, messages);
 ## Current rules
 
   * **rule_name:param1,param2,paramx** (Version when was released) `Example`
+
+  * **between:min,max** *(1.1.0)* `between:1,5`
+  
+  The value must be between the min and max value.
+
+
+  * **colorhex** *(1.1.0)* `colorhex`
+  
+  The value must be a hexadecimal color like: `#00FF00` or `#3c3c3c`
+
+
+  * **email** *(1.2.0)* `email`
+  
+  The value must be a valid email address
+
+
+  * **in** *(1.2.0)* `in:value1,value2,value3`
+  `
+  The variable's value must be equal to one of the value passed like parameter.
+
+
+  * **integer** *(1.1.0)* integer `integer`
+  
+  The value must be an integer.
+
+
+  * **max:max_value** *(1.1.0)* `max:5`
+  
+  The value must be equal or less than the given value.
+
   
   * **min:min_value** *(1.1.0)* `min:5`
   
   The value must be equal or greater than the given value.
   
   
-  * **max:max_value** *(1.1.0)* `max:5`
-  
-  The value must be equal or less than the given value.
-  
-  
-  * **integer** *(1.1.0)* integer `integer`
-  
-  The value must be an integer.
-  
-  
-  * **between:min,max** *(1.1.0)* `between:1,5`
-  
-  The value must be between the min and max value.
-  
-  
   * **required** *(1.1.0)* `required`
   
   The value must be different to: `''`, `null` and `undefinded`
-  
-  
-  
-  * **colorhex** *(1.1.0)* `colorhex`
-  
-  The value must be a hexadecimal color like: `#00FF00` or `#3c3c3c`
-  
+    
   
 ## Future rules
 
-  * **email**
   * **accepted**
   * **date**
-  * **exists_in_array**

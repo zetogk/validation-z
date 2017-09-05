@@ -1,5 +1,29 @@
 const validatorRules = {
 
+	'email': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
+		
+		if (ruleParams.length == 0) {
+
+			const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			//Regular expression taken from: http://w3resource.com/javascript/form/email-validation.php
+			
+			if (re.test(elementValue)) {
+				
+				return { error: false };
+	
+			} else {
+				
+				return { error: true, message: buildValidationMessage(customMessages, 'email', elementName, elementValue, ruleParams) };
+				
+			}
+
+		} else {
+
+			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
+
+		}
+		
+	},
 	'min': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
 
 		if (ruleParams.length == 1) {
@@ -38,6 +62,28 @@ const validatorRules = {
 		} else {
 
 			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
+
+		}
+
+	},
+	'in': (elementName, elementValue, otherRules = [], ruleParams = [], customMessages = {}) => {
+		
+		if (ruleParams.length == 0) {
+
+			return { error: true, message: buildValidationMessage(customMessages, 'invalid-params', elementName, elementValue, ruleParams) };
+			
+
+		} else {
+
+			if (ruleParams.includes(elementValue)) {
+				
+				return { error: false };
+	
+			} else {
+				
+				return { error: true, message: buildValidationMessage(customMessages, 'in', elementName, elementValue, ruleParams) };
+				
+			}
 
 		}
 
@@ -109,17 +155,19 @@ const validatorRules = {
 
 let messagesForValidation = {
 
-	'between': ':elName is out of data range',
+	'between': ':elName is out of data range.',
 	'colorhex': ':elName is not a valid color in hex.',
-	'invalid-params': 'Invalid type or quantity of params for :elName',
-	'integer': ':elName is not integer',
-	'min': ':elName should be greater than :param1',
-	'max': ':elName should be minor than :param1',
+	'email': ':elName is not a valid email address.',
+	'invalid-params': 'Invalid type or quantity of params for :elName.',
+	'integer': ':elName is not integer.',
+	'in': ':elValue is not allowed. ',
+	'min': ':elName should be greater than :param1.',
+	'max': ':elName should be minor than :param1.',
 	'required': ':elName is required.'
 
 };
 
-let validRules = ['between', 'colorhex', 'integer', 'min', 'max', 'required'];
+let validRules = ['between', 'colorhex', 'email', 'in', 'integer', 'min', 'max', 'required'];
 
 const buildValidationMessage = (customMessages, ruleName, elementName, elementValue, ruleParams) => {
 	
