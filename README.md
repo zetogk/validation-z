@@ -85,12 +85,12 @@ let errors = ValidationZ.makeValidation(inputs, rules, messages);
   The value must be a valid email address
 
 
-  * **in** *(1.2.0)* `in:value1,value2,value3`
-  `
+  * **in:value1,value2,value3** *(1.2.0)* `in:blue,red,yellow`
+  
   The variable's value must be equal to one of the value passed like parameter.
 
 
-  * **integer** *(1.1.0)* integer `integer`
+  * **integer** *(1.1.0)* `integer`
   
   The value must be an integer.
 

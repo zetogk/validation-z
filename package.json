@@ -1,6 +1,6 @@
 {
   "name": "validation-z",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Easy validation for input fields in server side.",
   "main": "index.js",
   "scripts": {
